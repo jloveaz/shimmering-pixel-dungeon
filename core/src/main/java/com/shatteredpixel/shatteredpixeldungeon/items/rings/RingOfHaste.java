@@ -28,6 +28,17 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class RingOfHaste extends Ring {
 
+	/**
+	 * Power to provide for speed bonus
+	 * Ugh, this may be too much.
+	 * 1.2 is too powerful; at +1, you get ~150% increase..
+	 * at +3, you out-speed every enemy in the game...
+	 * Consider removing entirely?
+	 * Hmm, what about an 'on use' buff for 20 turns, with 20 turn cooldown?
+	 * Lower cooldown timeframe over upgrade?
+	 */
+	static float SpeedBonusPowerTo = 1.08f;
+
 	{
 		icon = ItemSpriteSheet.Icons.RING_HASTE;
 	}
@@ -35,10 +46,10 @@ public class RingOfHaste extends Ring {
 	public String statsInfo() {
 		if (isIdentified()){
 			String info = Messages.get(this, "stats",
-					Messages.decimalFormat("#.##", 100f * (Math.pow(1.2f, soloBuffedBonus()) - 1f)));
+					Messages.decimalFormat("#.##", 100f * (Math.pow(SpeedBonusPowerTo, soloBuffedBonus()) - 1f)));
 			if (isEquipped(Dungeon.hero) && soloBuffedBonus() != combinedBuffedBonus(Dungeon.hero)){
 				info += "\n\n" + Messages.get(this, "combined_stats",
-						Messages.decimalFormat("#.##", 100f * (Math.pow(1.2f, combinedBuffedBonus(Dungeon.hero)) - 1f)));
+						Messages.decimalFormat("#.##", 100f * (Math.pow(SpeedBonusPowerTo, combinedBuffedBonus(Dungeon.hero)) - 1f)));
 			}
 			return info;
 		} else {
@@ -52,7 +63,7 @@ public class RingOfHaste extends Ring {
 	}
 	
 	public static float speedMultiplier( Char target ){
-		return (float)Math.pow(1.2, getBuffedBonus(target, Haste.class));
+		return (float)Math.pow(SpeedBonusPowerTo, getBuffedBonus(target, Haste.class));
 	}
 	
 	public class Haste extends RingBuff {

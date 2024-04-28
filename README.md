@@ -7,4 +7,13 @@ The core reasons for the change:
 - Attempt to add more movement based mechanisms.
 - Debuff ring of movement
 
+
+Currently in the pipeline:
+- ~~Add danger to drinking random potions~~
+- Add some danger to reading random scrolls
+  - Make reading random scrolls potentially dangerous even on relatively cleared floors
+- Add some additional enemies
+  - For fun
+
+
 If you like this game, please consider [supporting 00-Evans on Patreon](https://www.patreon.com/ShatteredPixel)!
