@@ -27,8 +27,13 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Freezing;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Frost;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Roots;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PathFinder;
 
@@ -37,7 +42,18 @@ public class PotionOfSnapFreeze extends ExoticPotion {
 	{
 		icon = ItemSpriteSheet.Icons.POTION_SNAPFREEZ;
 	}
-	
+
+	@Override
+	public void apply( Hero hero ) {
+		identify();
+		GLog.n( Messages.get(this, "ondrink") );
+
+		Buff.affect(hero, Frost.class, 30f);
+		Buff.affect(hero, Roots.class, 30f);
+		new Flare( 6, 32 ).color(0xFFFF00, true).show( curUser.sprite, 2f );
+	}
+
+
 	@Override
 	public void shatter(int cell) {
 

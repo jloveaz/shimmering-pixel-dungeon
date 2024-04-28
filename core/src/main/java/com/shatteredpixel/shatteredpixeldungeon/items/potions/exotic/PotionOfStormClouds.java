@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.StormCloud;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
@@ -35,7 +36,12 @@ public class PotionOfStormClouds extends ExoticPotion {
 	{
 		icon = ItemSpriteSheet.Icons.POTION_STRMCLOUD;
 	}
-	
+
+	@Override
+	public void apply(Hero hero) {
+		this.appliesInternalPoison(hero);
+	}
+
 	@Override
 	public void shatter(int cell) {
 

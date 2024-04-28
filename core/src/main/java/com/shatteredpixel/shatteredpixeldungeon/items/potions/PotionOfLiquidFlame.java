@@ -25,6 +25,7 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
@@ -35,6 +36,7 @@ public class PotionOfLiquidFlame extends Potion {
 	{
 		icon = ItemSpriteSheet.Icons.POTION_LIQFLAME;
 	}
+
 
 	@Override
 	public void shatter( int cell ) {
@@ -54,6 +56,23 @@ public class PotionOfLiquidFlame extends Potion {
 
 			}
 		}
+	}
+
+	@Override
+	public void apply( Hero hero ) {
+		// Would be more realistic to have a different debuff that's specific to internal burning,
+		// that's just a re-skinned poison... Only 'benefit' would be being able to have
+		// both internal burning and poison at once... hahaha
+		// but really, this debuff seems specific to this one instance..
+		// if lots of time, add as a new debuff.
+
+		// Consider adding a 'generic' debuff that is uniquely applied each time?
+		// That could be interesting, particularly if we allow to 'mix' different buff
+		// affects within one buff.
+
+		// Considered checking for flame-proof, but I believe that's only on armor,
+		// which could be argued doesn't protect internal fire
+		this.appliesInternalPoison(hero);
 	}
 	
 	@Override

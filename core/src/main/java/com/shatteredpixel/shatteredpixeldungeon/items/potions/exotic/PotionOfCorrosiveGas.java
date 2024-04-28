@@ -25,6 +25,8 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.CorrosiveGas;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.items.potions.Potion;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
@@ -35,7 +37,7 @@ public class PotionOfCorrosiveGas extends ExoticPotion {
 	{
 		icon = ItemSpriteSheet.Icons.POTION_CORROGAS;
 	}
-	
+
 	@Override
 	public void shatter( int cell ) {
 
@@ -58,4 +60,10 @@ public class PotionOfCorrosiveGas extends ExoticPotion {
 
 		GameScene.add( Blob.seed( cell, centerVolume, CorrosiveGas.class ).setStrength( 2 + Dungeon.scalingDepth()/5));
 	}
+
+	@Override
+	public void apply(Hero hero) {
+		this.appliesInternalPoison(hero, Potion.WORSE_INTERNAL_POISON_TURNS);
+	}
+
 }

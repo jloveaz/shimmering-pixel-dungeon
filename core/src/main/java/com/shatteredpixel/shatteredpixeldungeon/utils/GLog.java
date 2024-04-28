@@ -51,19 +51,39 @@ public class GLog {
 		DeviceCompat.log( TAG, text );
 		update.dispatch( text );
 	}
-	
+
+	/**
+	 * Positive message
+	 * @param text Text to add
+	 * @param args args
+	 */
 	public static void p( String text, Object... args ) {
 		i( POSITIVE + text, args );
 	}
-	
+
+	/**
+	 * Negative message
+	 * @param text Main text string with apparently 'printf' type formatting
+	 * @param args Arguments to go into main string
+	 */
 	public static void n( String text, Object... args ) {
 		i( NEGATIVE + text, args );
 	}
-	
+
+	/**
+	 * Warning message
+	 * @param text Main text string with apparently 'printf' type formatting
+	 * @param args Arguments to go into main string
+	 */
 	public static void w( String text, Object... args ) {
 		i( WARNING + text, args );
 	}
-	
+
+	/**
+	 * Highlight message
+	 * @param text Main text string with apparently 'printf' type formatting
+	 * @param args Arguments to go into main string
+	 */
 	public static void h( String text, Object... args ) {
 		i( HIGHLIGHT + text, args );
 	}

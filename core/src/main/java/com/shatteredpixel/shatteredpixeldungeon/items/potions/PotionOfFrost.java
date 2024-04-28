@@ -25,8 +25,14 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Freezing;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Chill;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PathFinder;
 
@@ -35,7 +41,17 @@ public class PotionOfFrost extends Potion {
 	{
 		icon = ItemSpriteSheet.Icons.POTION_FROST;
 	}
-	
+
+	@Override
+	public void apply( Hero hero ) {
+		identify();
+		GLog.n( Messages.get(this, "ondrink") );
+
+		Buff.affect(hero, Chill.class, 30f);
+		new Flare( 6, 32 ).color(0xFFFF00, true).show( curUser.sprite, 2f );
+	}
+
+
 	@Override
 	public void shatter( int cell ) {
 

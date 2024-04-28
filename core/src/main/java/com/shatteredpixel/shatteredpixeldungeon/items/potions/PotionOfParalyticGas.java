@@ -25,14 +25,33 @@ import com.shatteredpixel.shatteredpixeldungeon.Assets;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Blob;
 import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.ParalyticGas;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
+import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 
 public class PotionOfParalyticGas extends Potion {
 
 	{
 		icon = ItemSpriteSheet.Icons.POTION_PARAGAS;
+	}
+
+	@Override
+	public void apply( Hero hero ) {
+		identify();
+		GLog.n( Messages.get(this, "ondrink") );
+
+		// Going along with more severe random potion drinking
+		// Paralyzes the hero for some time.
+		// 30 seems reasonable compromise; if they're in a room, 10-20 to allow enemy to find,
+		// 5 to get to, 5 to hit?
+		Buff.prolong( hero, Paralysis.class, 30f + (float)hero.lvl/2);
+		new Flare( 6, 32 ).color(0xFFFF00, true).show( curUser.sprite, 2f );
 	}
 
 	@Override

@@ -29,8 +29,10 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.Fire;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Burning;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Ooze;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Poison;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Talent;
+import com.shatteredpixel.shatteredpixeldungeon.effects.Flare;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Splash;
 import com.shatteredpixel.shatteredpixeldungeon.items.Generator;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
@@ -84,6 +86,10 @@ public class Potion extends Item {
 	public static final String AC_CHOOSE = "CHOOSE";
 
 	private static final float TIME_TO_DRINK = 1f;
+
+	public static final float INTERNAL_POISON_TURNS = 6f;
+
+	public static final float WORSE_INTERNAL_POISON_TURNS = 10f;
 
 	private static final LinkedHashMap<String, Integer> colors = new LinkedHashMap<String, Integer>() {
 		{
@@ -309,7 +315,32 @@ public class Potion extends Item {
 			
 		}
 	}
-	
+
+	/**
+	 * Many potions are poisonous if ingested; helper to be used elsewhere
+	 * @param hero the hero
+	 */
+	public void appliesInternalPoison( Hero hero ) {
+		this.appliesInternalPoison(hero, Potion.INTERNAL_POISON_TURNS);
+	}
+
+	/**
+	 * Many potions are poisonous if ingested; helper to be used elsewhere
+	 * @param hero the hero
+	 */
+	public void appliesInternalPoison( Hero hero, float turns ) {
+		identify();
+		GLog.n( Messages.get(this, "ondrink") );
+
+		Buff.affect( hero, Poison.class).set(turns + (float)hero.lvl/2);
+		new Flare( 6, 32 ).color(0xFFFF00, true).show( curUser.sprite, 2f );
+	}
+
+	/**
+	 * When a potion is drank
+	 * Defaults to applying 'shatter' if not overridden
+	 * @param hero the hero
+	 */
 	public void apply( Hero hero ) {
 		shatter( hero.pos );
 	}
